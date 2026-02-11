@@ -20,17 +20,22 @@ func DiscoverMDNS(ctx context.Context, timeout time.Duration) ([]Device, error) 
 	go func() {
 		defer close(done)
 		for entry := range entriesCh {
+			// Determine IP address (prefer IPv4).
+			var ip string
+			switch {
+			case entry.AddrV4 != nil:
+				ip = entry.AddrV4.String()
+			case entry.AddrV6 != nil:
+				ip = entry.AddrV6.String()
+			default:
+				continue // Skip entries without any IP
+			}
+
 			d := Device{
 				Name:  sanitizeMDNSName(entry.Name),
-				IP:    entry.AddrV4.String(),
+				IP:    ip,
 				Port:  entry.Port,
 				Model: modelFromName(entry.Name),
-			}
-			if entry.AddrV4 == nil && entry.AddrV6 != nil {
-				d.IP = entry.AddrV6.String()
-			}
-			if entry.AddrV4 == nil && entry.AddrV6 == nil {
-				continue
 			}
 			devices = append(devices, d)
 		}
