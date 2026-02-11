@@ -1,0 +1,105 @@
+package cmd
+
+import (
+	"errors"
+	"fmt"
+	"os"
+
+	"github.com/alecthomas/kong"
+)
+
+// RootFlags are global flags available to all commands.
+type RootFlags struct {
+	JSON    bool   `help:"Output JSON to stdout" short:"j"`
+	Plain   bool   `help:"Output plain TSV (for scripting)"`
+	NoColor bool   `help:"Disable colors" env:"NO_COLOR"`
+	Device  string `help:"Device name or IP" short:"d" env:"LAMETRIC_DEVICE"`
+	Verbose bool   `help:"Enable verbose logging" short:"v"`
+}
+
+// CLI is the top-level Kong CLI struct.
+type CLI struct {
+	RootFlags `embed:""`
+
+	Version VersionCmd `cmd:"" name:"version" help:"Show version information"`
+}
+
+type exitPanic struct{ code int }
+
+// Execute runs the CLI with the given arguments.
+func Execute(args []string) (err error) {
+	parser, err := newParser()
+	if err != nil {
+		return err
+	}
+
+	defer func() {
+		if r := recover(); r != nil {
+			if ep, ok := r.(exitPanic); ok {
+				if ep.code == 0 {
+					err = nil
+					return
+				}
+
+				err = &ExitError{Code: ep.code, Err: errors.New("exited")}
+				return
+			}
+
+			panic(r)
+		}
+	}()
+
+	if len(args) == 0 {
+		args = []string{"--help"}
+	}
+
+	kctx, err := parser.Parse(args)
+	if err != nil {
+		parsedErr := wrapParseError(err)
+		_, _ = fmt.Fprintln(os.Stderr, parsedErr)
+		return parsedErr
+	}
+
+	err = kctx.Run()
+	if err != nil {
+		_, _ = fmt.Fprintln(os.Stderr, err)
+		return err
+	}
+
+	return nil
+}
+
+func wrapParseError(err error) error {
+	if err == nil {
+		return nil
+	}
+
+	var parseErr *kong.ParseError
+	if errors.As(err, &parseErr) {
+		return &ExitError{Code: CodeUsage, Err: parseErr}
+	}
+
+	return err
+}
+
+func newParser() (*kong.Kong, error) {
+	vars := kong.Vars{
+		"version": VersionString(),
+	}
+
+	cli := &CLI{}
+	parser, err := kong.New(
+		cli,
+		kong.Name("lametric"),
+		kong.Description("LaMetric CLI - control your LaMetric TIME/SKY from the command line"),
+		kong.Vars(vars),
+		kong.Writers(os.Stdout, os.Stderr),
+		kong.Exit(func(code int) { panic(exitPanic{code: code}) }),
+		kong.Bind(&cli.RootFlags),
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	return parser, nil
+}
