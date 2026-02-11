@@ -106,6 +106,8 @@ func newParser() (*kong.Kong, error) {
 		cli,
 		kong.Name("lametric"),
 		kong.Description("LaMetric CLI - control your LaMetric TIME/SKY from the command line"),
+		kong.ConfigureHelp(helpOptions()),
+		kong.Help(helpPrinter),
 		kong.Vars(vars),
 		kong.Writers(os.Stdout, os.Stderr),
 		kong.Exit(func(code int) { panic(exitPanic{code: code}) }),
