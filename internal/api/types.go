@@ -2,26 +2,26 @@ package api
 
 // Device represents a LaMetric device info response.
 type Device struct {
-	ID               string `json:"id"`
-	UUID             string `json:"uuid"`
-	Name             string `json:"name"`
-	SerialNumber     string `json:"serial_number"`
-	OSVersion        string `json:"os_version"`
-	Mode             string `json:"mode"`
-	Model            string `json:"model"`
-	Audio            Audio  `json:"audio"`
-	Bluetooth        Bluetooth `json:"bluetooth"`
-	Display          Display   `json:"display"`
-	WiFi             WiFi      `json:"wifi"`
+	ID           string    `json:"id"`
+	UUID         string    `json:"uuid"`
+	Name         string    `json:"name"`
+	SerialNumber string    `json:"serial_number"`
+	OSVersion    string    `json:"os_version"`
+	Mode         string    `json:"mode"`
+	Model        string    `json:"model"`
+	Audio        Audio     `json:"audio"`
+	Bluetooth    Bluetooth `json:"bluetooth"`
+	Display      Display   `json:"display"`
+	WiFi         WiFi      `json:"wifi"`
 }
 
 // Display represents display settings.
 type Display struct {
-	Brightness     int    `json:"brightness"`
-	BrightnessMode string `json:"brightness_mode"` // auto|manual
-	Width          int    `json:"width"`
-	Height         int    `json:"height"`
-	Type           string `json:"type"`
+	Brightness     int          `json:"brightness"`
+	BrightnessMode string       `json:"brightness_mode"` // auto|manual
+	Width          int          `json:"width"`
+	Height         int          `json:"height"`
+	Type           string       `json:"type"`
 	Screensaver    *Screensaver `json:"screensaver,omitempty"`
 }
 
@@ -38,30 +38,30 @@ type Audio struct {
 
 // Bluetooth represents bluetooth settings.
 type Bluetooth struct {
-	Available bool   `json:"available"`
-	Active    bool   `json:"active"`
-	Name      string `json:"name"`
-	MAC       string `json:"mac,omitempty"`
-	Pairable  bool   `json:"pairable"`
-	Discoverable bool `json:"discoverable"`
+	Available    bool   `json:"available"`
+	Active       bool   `json:"active"`
+	Name         string `json:"name"`
+	MAC          string `json:"mac,omitempty"`
+	Pairable     bool   `json:"pairable"`
+	Discoverable bool   `json:"discoverable"`
 }
 
 // WiFi represents wifi status (read-only).
 type WiFi struct {
-	Active    bool   `json:"active"`
-	MAC       string `json:"mac"`
-	SSID      string `json:"ssid"`
-	IP        string `json:"ip"`
-	Netmask   string `json:"netmask"`
-	Strength  int    `json:"strength"`
+	Active     bool   `json:"active"`
+	MAC        string `json:"mac"`
+	SSID       string `json:"ssid"`
+	IP         string `json:"ip"`
+	Netmask    string `json:"netmask"`
+	Strength   int    `json:"strength"`
 	Encryption string `json:"encryption,omitempty"`
 }
 
 // NotificationRequest is the payload sent to create a notification.
 type NotificationRequest struct {
-	Priority string            `json:"priority,omitempty"` // info|warning|critical
+	Priority string            `json:"priority,omitempty"`  // info|warning|critical
 	IconType string            `json:"icon_type,omitempty"` // none|info|alert
-	Lifetime int               `json:"lifetime,omitempty"` // ms
+	Lifetime int               `json:"lifetime,omitempty"`  // ms
 	Model    NotificationModel `json:"model"`
 }
 
@@ -105,9 +105,9 @@ type Notification struct {
 
 // App represents an installed app/widget.
 type App struct {
-	Package string      `json:"package"`
-	Vendor  string      `json:"vendor,omitempty"`
-	Version string      `json:"version,omitempty"`
+	Package string            `json:"package"`
+	Vendor  string            `json:"vendor,omitempty"`
+	Version string            `json:"version,omitempty"`
 	Widgets map[string]Widget `json:"widgets,omitempty"`
 }
 

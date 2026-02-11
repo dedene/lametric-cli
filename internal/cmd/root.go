@@ -34,6 +34,8 @@ type CLI struct {
 	WiFi      WiFiCmd      `cmd:"" name:"wifi" help:"WiFi status"`
 	Sounds    SoundsCmd    `cmd:"" name:"sounds" help:"List available sounds"`
 	Icons     IconsCmd     `cmd:"" name:"icons" help:"List available icon aliases"`
+	App       AppCmd       `cmd:"" name:"app" help:"App control"`
+	Stream    StreamCmd    `cmd:"" name:"stream" help:"Streaming controls"`
 }
 
 type exitPanic struct{ code int }

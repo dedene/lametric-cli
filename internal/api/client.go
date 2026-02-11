@@ -19,6 +19,7 @@ type Client struct {
 	httpClient *http.Client
 	apiKey     string
 	baseURL    string
+	ip         string
 }
 
 // NewClient creates a Client for a LaMetric device at the given IP.
@@ -36,6 +37,7 @@ func NewClient(ip, apiKey string) *Client {
 			Timeout:   defaultTimeout,
 		},
 		apiKey: apiKey,
+		ip:     ip,
 	}
 
 	c.baseURL = detectBaseURL(ip)
@@ -131,4 +133,9 @@ func (c *Client) Put(ctx context.Context, path string, body, out any) error {
 // Delete performs a DELETE request.
 func (c *Client) Delete(ctx context.Context, path string) error {
 	return c.do(ctx, http.MethodDelete, path, nil, nil)
+}
+
+// IP returns the device IP address.
+func (c *Client) IP() string {
+	return c.ip
 }

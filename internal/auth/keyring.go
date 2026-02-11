@@ -22,7 +22,7 @@ const (
 	keyringPrefix      = "lametric:"
 	keyringPasswordEnv = "LAMETRIC_KEYRING_PASSWORD" //nolint:gosec // env var name
 	keyringBackendEnv  = "LAMETRIC_KEYRING_BACKEND"  //nolint:gosec // env var name
-	apiKeyEnv          = "LAMETRIC_API_KEY"           //nolint:gosec // env var name
+	apiKeyEnv          = "LAMETRIC_API_KEY"          //nolint:gosec // env var name
 )
 
 var (
