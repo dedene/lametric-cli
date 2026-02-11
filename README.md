@@ -1,6 +1,16 @@
-# lametric-cli
+# 📟 lametric-cli - control LaMetric from your terminal
 
 CLI tool for LaMetric TIME/SKY devices. Control your device from the command line.
+
+## Agent Skills
+
+Use with AI coding assistants:
+
+```bash
+npx skills add dedene/lametric-cli
+```
+
+Works with Claude Code, Cursor, Codex, and [35+ agents](https://github.com/vercel-labs/skills#supported-agents).
 
 ## Installation
 
@@ -157,13 +167,13 @@ lametric icons
 
 ## Global Flags
 
-| Flag | Description |
-|------|-------------|
-| `-d, --device` | Device name or IP (env: `LAMETRIC_DEVICE`) |
-| `-j, --json` | Output JSON |
-| `--plain` | Output plain TSV (for scripting) |
-| `--no-color` | Disable colors (env: `NO_COLOR`) |
-| `-v, --verbose` | Verbose logging |
+| Flag            | Description                                |
+| --------------- | ------------------------------------------ |
+| `-d, --device`  | Device name or IP (env: `LAMETRIC_DEVICE`) |
+| `-j, --json`    | Output JSON                                |
+| `--plain`       | Output plain TSV (for scripting)           |
+| `--no-color`    | Disable colors (env: `NO_COLOR`)           |
+| `-v, --verbose` | Verbose logging                            |
 
 ## Configuration
 
@@ -183,11 +193,11 @@ API keys are stored securely in your system keyring.
 
 ## Environment Variables
 
-| Variable | Description |
-|----------|-------------|
+| Variable           | Description                 |
+| ------------------ | --------------------------- |
 | `LAMETRIC_API_KEY` | API key (overrides keyring) |
-| `LAMETRIC_DEVICE` | Default device IP or alias |
-| `NO_COLOR` | Disable colored output |
+| `LAMETRIC_DEVICE`  | Default device IP or alias  |
+| `NO_COLOR`         | Disable colored output      |
 
 ## License
 
