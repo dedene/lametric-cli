@@ -21,7 +21,19 @@ type RootFlags struct {
 type CLI struct {
 	RootFlags `embed:""`
 
-	Version VersionCmd `cmd:"" name:"version" help:"Show version information"`
+	Notify    NotifyCmd    `cmd:"" name:"notify" help:"Send a notification"`
+	Dismiss   DismissCmd   `cmd:"" name:"dismiss" help:"Dismiss a notification"`
+	Version   VersionCmd   `cmd:"" name:"version" help:"Show version information"`
+	Setup     SetupCmd     `cmd:"" help:"Setup wizard for a new device"`
+	Discover  DiscoverCmd  `cmd:"" help:"Find LaMetric devices on the network"`
+	Auth      AuthCmd      `cmd:"" help:"Manage API keys"`
+	Device    DeviceCmd    `cmd:"" help:"Show device information"`
+	Display   DisplayCmd   `cmd:"" name:"display" help:"Display settings"`
+	Audio     AudioCmd     `cmd:"" name:"audio" help:"Audio settings"`
+	Bluetooth BluetoothCmd `cmd:"" name:"bluetooth" help:"Bluetooth settings"`
+	WiFi      WiFiCmd      `cmd:"" name:"wifi" help:"WiFi status"`
+	Sounds    SoundsCmd    `cmd:"" name:"sounds" help:"List available sounds"`
+	Icons     IconsCmd     `cmd:"" name:"icons" help:"List available icon aliases"`
 }
 
 type exitPanic struct{ code int }
