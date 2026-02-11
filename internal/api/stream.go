@@ -44,27 +44,27 @@ type StreamStatus struct {
 	SessionID string `json:"session_id,omitempty"`
 }
 
-// StartStream initiates a streaming session via POST /api/v2/device/streaming/start.
+// StartStream initiates a streaming session via PUT /api/v2/device/stream/start.
 func (c *Client) StartStream(ctx context.Context) (*StreamStartResponse, error) {
 	var resp StreamStartResponse
-	if err := c.Post(ctx, "/api/v2/device/streaming/start", nil, &resp); err != nil {
+	if err := c.Put(ctx, "/api/v2/device/stream/start", nil, &resp); err != nil {
 		return nil, fmt.Errorf("start stream: %w", err)
 	}
 	return &resp, nil
 }
 
-// StopStream ends the streaming session via DELETE /api/v2/device/streaming/stop.
+// StopStream ends the streaming session via PUT /api/v2/device/stream/stop.
 func (c *Client) StopStream(ctx context.Context) error {
-	if err := c.Delete(ctx, "/api/v2/device/streaming/stop"); err != nil {
+	if err := c.Put(ctx, "/api/v2/device/stream/stop", nil, nil); err != nil {
 		return fmt.Errorf("stop stream: %w", err)
 	}
 	return nil
 }
 
-// GetStreamStatus returns current streaming status via GET /api/v2/device/streaming.
+// GetStreamStatus returns current streaming status via GET /api/v2/device/stream.
 func (c *Client) GetStreamStatus(ctx context.Context) (*StreamStatus, error) {
 	var status StreamStatus
-	if err := c.Get(ctx, "/api/v2/device/streaming", &status); err != nil {
+	if err := c.Get(ctx, "/api/v2/device/stream", &status); err != nil {
 		return nil, fmt.Errorf("get stream status: %w", err)
 	}
 	return &status, nil
