@@ -2,15 +2,13 @@
 
 CLI tool for LaMetric TIME/SKY devices. Control your device from the command line.
 
-## Agent Skills
+## Agent Skill
 
-Use with AI coding assistants:
+This CLI is available as an [open agent skill](https://skills.sh/) for AI assistants including [Claude Code](https://claude.ai/code), [OpenClaw](https://openclaw.ai/), [Codex](https://github.com/openai/codex), Cursor, GitHub Copilot, and [35+ agents](https://github.com/vercel-labs/skills#supported-agents).
 
 ```bash
 npx skills add dedene/lametric-cli
 ```
-
-Works with Claude Code, Cursor, Codex, and [35+ agents](https://github.com/vercel-labs/skills#supported-agents).
 
 ## Installation
 
