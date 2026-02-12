@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/dedene/lametric-cli/internal/discovery"
+	"github.com/dedene/lametric-cli/internal/output"
 )
 
 // DiscoverCmd finds LaMetric devices on the local network.
@@ -17,7 +18,12 @@ type DiscoverCmd struct {
 func (c *DiscoverCmd) Run(flags *RootFlags) error {
 	f := newFormatter(flags)
 
+	spinner := output.NewSpinner("Discovering devices...")
+	spinner.Start()
+
 	devices, err := discovery.Discover(context.Background(), c.Timeout)
+	spinner.Stop()
+
 	if err != nil {
 		return fmt.Errorf("discover: %w", err)
 	}

@@ -3,6 +3,7 @@ package discovery
 import (
 	"context"
 	"fmt"
+	"net"
 	"time"
 )
 
@@ -73,5 +74,23 @@ func Discover(ctx context.Context, timeout time.Duration) ([]Device, error) {
 		return nil, fmt.Errorf("discovery failed: mdns: %w; ssdp: %v", mdnsRes.err, ssdpRes.err)
 	}
 
-	return devices, nil
+	// Verify devices by checking LaMetric API port (4343).
+	var verified []Device
+	for _, d := range devices {
+		if isLaMetricPort(d.IP) {
+			verified = append(verified, d)
+		}
+	}
+
+	return verified, nil
+}
+
+// isLaMetricPort checks if the device has the LaMetric HTTPS API port open.
+func isLaMetricPort(ip string) bool {
+	conn, err := net.DialTimeout("tcp", net.JoinHostPort(ip, "4343"), 2*time.Second)
+	if err != nil {
+		return false
+	}
+	_ = conn.Close()
+	return true
 }

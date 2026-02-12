@@ -54,6 +54,7 @@ type ssdpRoot struct {
 type ssdpDevice struct {
 	FriendlyName string `xml:"friendlyName"`
 	ModelName    string `xml:"modelName"`
+	Manufacturer string `xml:"manufacturer"`
 }
 
 // deviceFromLocation fetches a UPnP device description and parses it.
@@ -78,6 +79,14 @@ func deviceFromLocation(ctx context.Context, location string) (Device, error) {
 	var root ssdpRoot
 	if err := xml.Unmarshal(body, &root); err != nil {
 		return Device{}, fmt.Errorf("ssdp xml: %w", err)
+	}
+
+	// Validate this is actually a LaMetric device
+	manufacturer := strings.ToLower(root.Device.Manufacturer)
+	modelName := strings.ToLower(root.Device.ModelName)
+	if !strings.Contains(manufacturer, "lametric") &&
+		!strings.Contains(modelName, "lametric") {
+		return Device{}, fmt.Errorf("not a LaMetric device: %s", root.Device.FriendlyName)
 	}
 
 	host, port, _ := net.SplitHostPort(req.URL.Host)

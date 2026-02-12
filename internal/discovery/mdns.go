@@ -3,6 +3,9 @@ package discovery
 import (
 	"context"
 	"fmt"
+	"io"
+	"log"
+	"os"
 	"strings"
 	"time"
 
@@ -13,6 +16,10 @@ const mdnsService = "_lametric-api._tcp"
 
 // DiscoverMDNS finds LaMetric devices via mDNS.
 func DiscoverMDNS(ctx context.Context, timeout time.Duration) ([]Device, error) {
+	// Suppress mdns library INFO logging
+	log.SetOutput(io.Discard)
+	defer log.SetOutput(os.Stderr)
+
 	entriesCh := make(chan *mdns.ServiceEntry, 16)
 	var devices []Device
 
