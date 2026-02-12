@@ -33,9 +33,9 @@ func TestBuildFrames_WithIcon(t *testing.T) {
 	if len(frames) != 1 {
 		t.Fatalf("expected 1 frame, got %d", len(frames))
 	}
-	// "rocket" alias resolves to "i120"
-	if frames[0].Icon != "i120" {
-		t.Errorf("icon = %q, want %q", frames[0].Icon, "i120")
+	// "rocket" alias resolves to animated rocket icon
+	if frames[0].Icon != "a26304" {
+		t.Errorf("icon = %q, want %q", frames[0].Icon, "a26304")
 	}
 }
 

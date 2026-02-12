@@ -13,8 +13,8 @@ func TestResolveIcon(t *testing.T) {
 		want  string
 	}{
 		{"empty", "", ""},
-		{"alias rocket", "rocket", "i120"},
-		{"alias heart", "heart", "i339"},
+		{"alias rocket", "rocket", "a26304"},
+		{"alias heart", "heart", "a230"},
 		{"icon id i-prefix", "i9999", "i9999"},
 		{"icon id a-prefix", "a1234", "a1234"},
 		{"unknown passthrough", "custom", "custom"},
