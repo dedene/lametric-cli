@@ -274,3 +274,10 @@ lametric discover --timeout=10s
 # Add to config
 lametric setup
 ```
+
+
+## Installation
+
+```bash
+brew install dedene/tap/lametric
+```
