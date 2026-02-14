@@ -2,9 +2,26 @@
 name: lametric-cli
 description: Control LaMetric TIME/SKY smart displays from the command line. Use when sending notifications, controlling device brightness/volume, managing timers, or displaying data on LaMetric devices. Triggers on "LaMetric", "smart display", "notification to device", "set timer", "send alert to clock".
 license: MIT
+homepage: https://github.com/dedene/lametric-cli
 metadata:
   author: dedene
-  version: "1.0.0"
+  version: "1.1.0"
+  openclaw:
+    primaryEnv: LAMETRIC_API_KEY
+    requires:
+      env:
+        - LAMETRIC_API_KEY
+        - LAMETRIC_DEVICE
+      bins:
+        - lametric
+    install:
+      - kind: brew
+        tap: dedene/tap
+        formula: lametric
+        bins: [lametric]
+      - kind: go
+        package: github.com/dedene/lametric-cli/cmd/lametric
+        bins: [lametric]
 ---
 
 # LaMetric CLI
